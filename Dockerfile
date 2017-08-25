@@ -2,13 +2,13 @@ FROM openjdk:8-jdk-alpine
 
 RUN apk add --no-cache curl unzip
 
-ENV DATACLEANER_VERSION 5.1.3
+ENV DATACLEANER_VERSION 5.2.2
 
 RUN mkdir /opt && \
-  curl -L https://sourceforge.net/projects/datacleaner/files/datacleaner%20%28stable%29/$DATACLEANER_VERSION/DataCleaner-all.zip/download > /opt/datacleaner.zip && \
+  curl -L https://github.com/datacleaner/DataCleaner/releases/download/DataCleaner-$DATACLEANER_VERSION/DataCleaner-$DATACLEANER_VERSION.zip > /opt/datacleaner.zip && \
   unzip /opt/datacleaner.zip -d /opt && \
   rm -f /opt/datacleaner.zip
 
 WORKDIR /opt/DataCleaner
 
-CMD ["/opt/DataCleaner/datacleaner.sh", "-version"]
+ENTRYPOINT ["java","-jar","/opt/DataCleaner/DataCleaner.jar"]
